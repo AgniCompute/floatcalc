@@ -1,96 +1,43 @@
 # FloatCalc
 
-A simple Windows desktop calculator with a **Pin** setting that keeps it above your browser and other windows.
+A clean, lightweight Windows desktop calculator with a **Pin** toggle to stay above your windows and a full **Calculation History** drawer.
 
-## Why This Exists
+Built as an ultra-lean Progressive Web App (PWA) ready for local desktop use and Microsoft Store packaging. Zero bloated runtime dependencies.
 
-Windows Calculator can disappear behind your browser when you switch windows. FloatCalc solves that with an always-on-top mode.
+---
 
 ## Features
 
-- Basic calculator operations
-- Keyboard support
-- Draggable compact window
-- Pin/lock toggle to keep the calculator on top
-- Windows installer and portable app builds
-- Microsoft Store/AppX build path
-- GitHub Releases workflow
+- **Always on top**: Pin the calculator so it never disappears behind your browser or spreadsheet.
+- **Calculation History**: Automatic equation and result recording with click-to-recall.
+- **Lightweight & Fast**: Pure standard web technologies; starts instantly with near-zero memory footprint.
+- **Offline Capable**: Backed by a service worker cache.
+- **Dual Themes**: Crisp light and high-contrast dark modes with instant toggle.
+- **Full Keyboard Support**: Numpad, `Enter` / `=`, `Escape`, backspace, and operator shortcuts.
 
-## Download For Normal Users
+---
 
-Go to the project's GitHub **Releases** page and download one of these files:
+## Architecture
 
-- `FloatCalc-0.1.0-x64.exe` for the installer
-- `FloatCalc-Portable-0.1.0-x64.exe` for the portable build
+- `src/index.html`: Clean, accessible interface.
+- `src/styles.css`: Modern responsive UI with theme variable tokens.
+- `src/renderer.js`: Precision mathematical calculation, keyboard handling, and persistent history.
+- `src/sw.js`: Service worker for reliable offline execution.
+- `src/manifest.json`: Web app manifest configured for standalone desktop presentation.
 
-Windows may show a warning until the app is code signed. Click **More info** and **Run anyway** only if you downloaded it from the official repo.
+---
 
-See [docs/distribution.md](./docs/distribution.md) for the full release path.
-See [docs/microsoft-store.md](./docs/microsoft-store.md) for the Microsoft Store release path.
+## Local Development & Testing
 
-## Run From Source
+Open `src/index.html` in Microsoft Edge, Chrome, or your default browser.
 
+To verify JavaScript syntax:
 ```bash
-npm install
-npm run dev
+node scripts/check-syntax.js
 ```
 
-## Build The Windows App
-
-```bash
-npm install
-npm run build
-```
-
-The installer is created in:
-
-```text
-release/
-```
-
-To build the portable app:
-
-```bash
-npm run build:portable
-```
-
-The portable app is created in:
-
-```text
-release-portable/
-```
-
-## Developer Checks
-
-```bash
-npm run lint
-```
-
-## Build For Microsoft Store
-
-First replace the Partner Center placeholders in `package.json`, then run:
-
-```bash
-npm run build:store:x64
-```
-
-## Release Checklist
-
-1. Replace `YOUR_GITHUB_USERNAME` in `package.json`.
-2. Update the version in `package.json`.
-3. Run `npm install`.
-4. Run `npm run lint`.
-5. Run `npm run build`.
-6. Optional: run `npm run build:portable`.
-7. Upload the installer from `release/` and optional portable app from `release-portable/` to GitHub Releases.
-
-For automatic releases, push a tag like:
-
-```bash
-git tag v0.1.0
-git push origin v0.1.0
-```
+---
 
 ## License
 
-MIT
+MIT © [Radhe Patel](https://github.com/AgniCompute)

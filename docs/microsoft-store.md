@@ -1,71 +1,39 @@
-# Microsoft Store Release Plan
+# Microsoft Store Release via PWABuilder
 
-The current Electron build produces an AppX Store package. Microsoft Store can host,
-sign, install, and update this package after submission.
+FloatCalc is distributed to the Microsoft Store as a high-performance Progressive Web App (PWA) packaged using Microsoft's official **PWABuilder** engine.
 
-## What You Need From Partner Center
+This approach gives you:
+- Zero heavy dependencies (no Electron crashes, no 400 MB runtime bloat).
+- Native Windows Store integration (instant install, automatic updates, Store signing).
+- Microsoft Store re-signing (no paid code-signing certificates needed).
 
-After you create the app in Microsoft Partner Center and reserve the name, copy these values into `package.json`:
+---
 
-- `build.appx.identityName`
-- `build.appx.publisher`
-- `build.appx.publisherDisplayName`
+## Store Identity Details (from Partner Center)
 
-The placeholders currently look like this:
+These values are registered under your Microsoft Partner Center account:
 
-```json
-{
-  "identityName": "ShaktiOS.FloatCalc",
-  "publisher": "CN=0E4D184F-8AB0-4561-9A62-93A756DCBC5B"
-}
-```
+- **Package ID / Identity Name:** `ShaktiOS.FloatCalc`
+- **Publisher ID:** `CN=0E4D184F-8AB0-4561-9A62-93A756DCBC5B`
+- **Publisher Display Name:** `Shakti_OS`
+- **App Name:** `FloatCalc`
 
-Do not guess these. Use the exact Store identity values from Partner Center.
+---
 
-## Local Store Build
+## Packaging Steps
 
-Before building for Store submission, remove the local Electron crash workaround in
-`src/main.js` or migrate the wrapper to a Store-friendlier shell such as WebView2,
-WinUI, or Tauri. The current GPU/sandbox command-line switches are acceptable only
-as a local debugging workaround and should be treated as a certification risk.
+1. **Deploy to GitHub Pages:**
+   - Host the `calculator-lock` repo via GitHub Pages to get an HTTPS URL (e.g. `https://agnicompute.github.io/floatcalc/src/`).
 
-Build a Store package:
+2. **Generate Store Package via PWABuilder:**
+   - Go to [PWABuilder](https://www.pwabuilder.com).
+   - Enter your live GitHub Pages URL.
+   - Click **Package For Stores** -> **Windows**.
+   - Input the Partner Center identity credentials listed above.
+   - Download the generated `.msixbundle` or `.appxbundle`.
 
-```bash
-npm install
-npm run build:store:x64
-```
-
-Build x64 and arm64:
-
-```bash
-npm run build:store
-```
-
-The Store-oriented output is created under:
-
-```text
-release/
-```
-
-Look for an `.appx` file.
-
-## Store Submission Flow
-
-1. Open Partner Center.
-2. Create or open the app product.
-3. Reserve the app name.
-4. Copy the Store identity values into `package.json`.
-5. Build the AppX package.
-6. Run local install/sideload testing.
-7. Complete Store listing, screenshots, age rating, privacy policy, and certification notes.
-8. Upload the `.appx` package.
-9. Submit for certification.
-
-## Important Notes
-
-- For AppX submissions, Microsoft Store re-signs the package after certification.
-- You do not need to buy a CA-trusted code-signing certificate for AppX Store submission.
-- If you submit a traditional MSI/EXE instead, Microsoft does not re-sign it and you need your own Authenticode signing certificate.
-- For Store releases, do not rely on `electron-updater`; Microsoft Store handles updates.
-- Keep the app small, stable, and privacy-light for the first submission.
+3. **Submit to Microsoft Partner Center:**
+   - In Partner Center, go to your reserved product **FloatCalc**.
+   - Upload the package file under **Packages**.
+   - Fill out the basic store listing, descriptions, and screenshots.
+   - Submit for certification.

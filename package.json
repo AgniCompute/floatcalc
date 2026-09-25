@@ -1,8 +1,7 @@
 {
   "name": "floatcalc",
   "version": "0.1.0",
-  "description": "A simple Windows desktop calculator with an always-on-top lock.",
-  "main": "src/main.js",
+  "description": "A lightweight Windows desktop calculator with always-on-top mode and calculation history.",
   "author": "Radhe Patel",
   "license": "MIT",
   "repository": {
@@ -10,63 +9,14 @@
     "url": "https://github.com/AgniCompute/floatcalc.git"
   },
   "scripts": {
-    "dev": "electron .",
-    "build": "electron-builder --win nsis --publish never",
-    "build:portable": "electron-builder --win portable -c.directories.output=release-portable -c.win.artifactName=${productName}-Portable-${version}-${arch}.${ext}",
-    "build:store": "electron-builder --win appx --x64 --arm64 --publish never",
-    "build:store:x64": "electron-builder --win appx --x64 --publish never",
-    "release": "electron-builder --win nsis portable --publish always",
-    "build:dir": "electron-builder --dir",
-    "lint": "node scripts/check-syntax.js"
+    "check": "node scripts/check-syntax.js"
   },
   "keywords": [
     "calculator",
+    "pwa",
     "desktop",
-    "electron",
     "always-on-top",
-    "windows"
-  ],
-  "devDependencies": {
-    "electron": "^44.4.5",
-    "electron-builder": "^26.15.3"
-  },
-  "build": {
-    "appId": "com.radhepatel.floatcalc",
-    "productName": "FloatCalc",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "src/**/*",
-      "assets/**/*",
-      "package.json"
-    ],
-    "win": {
-      "target": "nsis",
-      "artifactName": "${productName}-${version}-${arch}.${ext}"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "FloatCalc"
-    },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "AgniCompute",
-        "repo": "floatcalc"
-      }
-    ],
-    "appx": {
-      "identityName": "ShaktiOS.FloatCalc",
-      "publisher": "CN=0E4D184F-8AB0-4561-9A62-93A756DCBC5B",
-      "publisherDisplayName": "Shakti_OS",
-      "displayName": "FloatCalc",
-      "languages": [
-        "en-US"
-      ]
-    }
-  }
+    "windows",
+    "history"
+  ]
 }
