@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FloatCalc</title>
+    <meta name="theme-color" content="#191d27" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="./icon-192.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="titlebar">
+        <div class="drag-region" aria-label="Drag window">
+          <span class="mode-label" id="modeLabel">Standard</span>
+        </div>
+        <button class="toolbar-button" id="settingsButton" type="button" title="Settings" aria-label="Settings" aria-expanded="false">
+          <span class="gear-symbol" aria-hidden="true"></span>
+        </button>
+        <button class="toolbar-button lock-toggle" id="lockButton" type="button" title="Keep on top" aria-label="Keep on top" aria-pressed="false">
+          <span class="pin-symbol" aria-hidden="true"></span>
+        </button>
+        <button class="window-button" id="minimizeButton" type="button" title="Minimize" aria-label="Minimize">−</button>
+        <button class="window-button close" id="closeButton" type="button" title="Close" aria-label="Close">×</button>
+      </header>
+
+      <aside class="settings-panel" id="settingsPanel" aria-label="Settings" hidden>
+        <div class="setting-group">
+          <span>Theme</span>
+          <div class="segmented" role="group" aria-label="Theme">
+            <button type="button" class="theme-option active" data-theme="light">Light</button>
+            <button type="button" class="theme-option" data-theme="dark">Dark</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="display" aria-live="polite">
+        <div class="display-values">
+          <div class="previous" id="previousValue"></div>
+          <output class="current" id="currentValue">0</output>
+        </div>
+      </section>
+
+      <section class="keypad" aria-label="Calculator keys">
+        <button data-action="clear" class="utility">AC</button>
+        <button data-action="sign" class="utility">+/-</button>
+        <button data-action="percent" class="utility">%</button>
+        <button data-operator="/" class="operator">/</button>
+
+        <button data-number="7">7</button>
+        <button data-number="8">8</button>
+        <button data-number="9">9</button>
+        <button data-operator="*" class="operator">x</button>
+
+        <button data-number="4">4</button>
+        <button data-number="5">5</button>
+        <button data-number="6">6</button>
+        <button data-operator="-" class="operator">-</button>
+
+        <button data-number="1">1</button>
+        <button data-number="2">2</button>
+        <button data-number="3">3</button>
+        <button data-operator="+" class="operator">+</button>
+
+        <button data-action="backspace" class="utility">DEL</button>
+        <button data-number="0" class="zero">0</button>
+        <button data-action="decimal">.</button>
+        <button data-action="equals" class="equals">=</button>
+      </section>
+    </main>
+
+    <script src="./renderer.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>

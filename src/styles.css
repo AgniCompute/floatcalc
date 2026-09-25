@@ -1,0 +1,443 @@
+:root {
+  color-scheme: dark;
+  font-family:
+    "Segoe UI Variable Display",
+    "Segoe UI",
+    sans-serif;
+  background: #f3f4f8;
+  color: #1d2433;
+  --bg: #f3f4f8;
+  --page-bg:
+    linear-gradient(145deg, #eef2f7 0%, #f8f3ec 100%);
+  --shell: #fbfcff;
+  --titlebar: rgba(251, 252, 255, 0.94);
+  --display: #f5f7fb;
+  --keypad: #edf1f7;
+  --panel: #ffffff;
+  --line: rgba(31, 41, 55, 0.13);
+  --text: #1d2433;
+  --muted: #687386;
+  --number: #ffffff;
+  --number-hover: #f4f7fb;
+  --button-border: rgba(31, 41, 55, 0.1);
+  --button-shadow: rgba(31, 41, 55, 0.08);
+  --button-highlight: rgba(255, 255, 255, 0.85);
+  --utility: #e8edf5;
+  --utility-hover: #dce4ef;
+  --utility-text: #354052;
+  --operator: #dcecf8;
+  --operator-hover: #cbe4f4;
+  --operator-text: #13465f;
+  --toolbar: #ffffff;
+  --toolbar-hover: #eef3f8;
+  --locked-bg: #dff4ee;
+  --locked-text: #14543f;
+  --locked-pin: #1f765b;
+  --close-hover-bg: #ffe8e5;
+  --close-hover-text: #9f2e28;
+  --accent: #ffb85c;
+  --accent-hover: #ffa93a;
+  --accent-text: #2d1700;
+  --focus: #4f7cff;
+  --success: #2f8f68;
+  --danger: #9f2e28;
+}
+
+body[data-theme="dark"] {
+  --bg: #0f1117;
+  --page-bg:
+    radial-gradient(circle at 50% 0%, rgba(64, 78, 105, 0.38), transparent 42%),
+    linear-gradient(145deg, #0f1117 0%, #171a22 48%, #12151c 100%);
+  --shell: #191d27;
+  --titlebar: rgba(20, 24, 33, 0.96);
+  --display: #151923;
+  --keypad: #11151d;
+  --panel: #202633;
+  --line: rgba(226, 232, 240, 0.1);
+  --text: #f3f6fb;
+  --muted: #94a3b8;
+  --number: #202633;
+  --number-hover: #293142;
+  --button-border: rgba(226, 232, 240, 0.08);
+  --button-shadow: rgba(0, 0, 0, 0.28);
+  --button-highlight: rgba(255, 255, 255, 0.04);
+  --utility: #252c3a;
+  --utility-hover: #30384a;
+  --utility-text: #dbe4f0;
+  --operator: #203849;
+  --operator-hover: #27465c;
+  --operator-text: #aee7ff;
+  --toolbar: #202633;
+  --toolbar-hover: #2a3242;
+  --locked-bg: #1f3d34;
+  --locked-text: #b7f4db;
+  --locked-pin: #7ee0b6;
+  --close-hover-bg: #47252b;
+  --close-hover-text: #ffc7c2;
+  --accent: #ffb457;
+  --accent-hover: #ffc16f;
+  --accent-text: #201100;
+  --success: #82e6bc;
+  --danger: #ffaaa3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--page-bg), var(--bg);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  user-select: none;
+}
+
+button {
+  border: 0;
+  color: inherit;
+  font: inherit;
+}
+
+.shell {
+  position: relative;
+  display: grid;
+  grid-template-rows: 48px minmax(150px, 1fr) auto;
+  width: min(100%, 390px);
+  height: min(100%, 650px);
+  min-height: 560px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--shell);
+  box-shadow:
+    0 28px 72px rgba(0, 0, 0, 0.32),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 8px 10px;
+  background: var(--titlebar);
+  border-bottom: 1px solid var(--line);
+}
+
+.drag-region {
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+  height: 100%;
+}
+
+.mode-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.toolbar-button {
+  -webkit-app-region: no-drag;
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--toolbar);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.toolbar-button:hover {
+  background: var(--toolbar-hover);
+}
+
+.pin-symbol {
+  position: relative;
+  width: 10px;
+  height: 10px;
+}
+
+.pin-symbol::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  width: 5px;
+  height: 7px;
+  border-radius: 2px 2px 1px 1px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.pin-symbol::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 7px;
+  width: 1px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.toolbar-button.locked {
+  border-color: rgba(47, 143, 104, 0.35);
+  background: var(--locked-bg);
+  color: var(--locked-text);
+}
+
+.toolbar-button.locked .pin-symbol::before,
+.toolbar-button.locked .pin-symbol::after {
+  background: var(--locked-pin);
+}
+
+.gear-symbol {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--muted);
+  border-radius: 999px;
+}
+
+.gear-symbol::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 999px;
+  background: var(--muted);
+}
+
+.gear-symbol::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: -4px;
+  width: 2px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--muted);
+  box-shadow:
+    0 0 0 0 var(--muted);
+  transform: rotate(45deg);
+}
+
+.window-button {
+  -webkit-app-region: no-drag;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.window-button:hover {
+  border-color: var(--line);
+  background: var(--toolbar-hover);
+  color: var(--text);
+}
+
+.window-button.close:hover {
+  border-color: rgba(198, 76, 70, 0.35);
+  background: var(--close-hover-bg);
+  color: var(--close-hover-text);
+}
+
+.settings-panel {
+  position: absolute;
+  z-index: 5;
+  top: 54px;
+  right: 12px;
+  width: 210px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--shell);
+  box-shadow: 0 18px 44px rgba(55, 58, 74, 0.18);
+}
+
+.setting-group {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.setting-group select {
+  width: 100%;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--number);
+  color: var(--text);
+  font: inherit;
+  text-transform: none;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(109, 102, 120, 0.08);
+}
+
+.theme-option {
+  height: 28px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.theme-option.active {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 150px;
+  padding: 18px 16px 16px;
+  background: var(--display);
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+}
+
+.display-values {
+  min-width: 0;
+}
+
+.previous {
+  min-height: 26px;
+  color: var(--muted);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.current {
+  display: block;
+  min-height: 72px;
+  color: var(--text);
+  font-size: 50px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  line-height: 1.18;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 12px;
+  background: var(--keypad);
+}
+
+.keypad button {
+  aspect-ratio: 1 / 0.78;
+  min-height: 58px;
+  border-radius: 8px;
+  border: 1px solid var(--button-border);
+  background: var(--number);
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 740;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 var(--button-highlight),
+    0 1px 2px var(--button-shadow);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    transform 80ms ease;
+}
+
+.keypad button:hover {
+  background: var(--number-hover);
+}
+
+.keypad button:active {
+  transform: translateY(1px);
+}
+
+.keypad .utility {
+  background: var(--utility);
+  color: var(--utility-text);
+  font-size: 17px;
+}
+
+.keypad .utility:hover {
+  background: var(--utility-hover);
+}
+
+.keypad .operator {
+  background: var(--operator);
+  color: var(--operator-text);
+}
+
+.keypad .operator:hover {
+  background: var(--operator-hover);
+}
+
+.keypad .equals {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.keypad .equals:hover {
+  background: var(--accent-hover);
+}
+
+.keypad .zero {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent),
+    var(--number);
+}
+
+@media (max-width: 340px) {
+  .current {
+    font-size: 44px;
+  }
+}
