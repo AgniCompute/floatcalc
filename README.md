@@ -4,13 +4,11 @@ A modern, precision-engineered Windows desktop calculator featuring a frameless 
 
 ---
 
-## Demo
+## Demo Video
 
-https://github.com/user-attachments/assets/demo (See [`docs/demo.mp4`](docs/demo.mp4) for the live screen recording)
+A walkthrough demonstration is available at [`docs/demo.mp4`](docs/demo.mp4), showcasing always-on-top window pinning (`Ctrl+P`), the Shunting Yard math parser with order of operations and parentheses, the flyout scientific drawer (`Alt+S`), and ghost opacity mode.
 
 ---
-
-## Key Features
 
 - **Always-On-Top Window Locking (`Ctrl+P`)**: Float your calculator above spreadsheets, web browsers, and IDEs without losing focus.
 - **Scientific Drawer & Parentheses (`Alt+S`)**:
