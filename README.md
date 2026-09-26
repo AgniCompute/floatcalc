@@ -4,6 +4,12 @@ A modern, precision-engineered Windows desktop calculator featuring a frameless 
 
 ---
 
+## Demo
+
+https://github.com/user-attachments/assets/demo (See [`docs/demo.mp4`](docs/demo.mp4) for the live screen recording)
+
+---
+
 ## Key Features
 
 - **Always-On-Top Window Locking (`Ctrl+P`)**: Float your calculator above spreadsheets, web browsers, and IDEs without losing focus.
