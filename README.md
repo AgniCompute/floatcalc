@@ -2,13 +2,18 @@
 
 A modern, precision-engineered Windows desktop calculator featuring a frameless translucent UI, native **Always-On-Top** pinning, **Shunting Yard Parentheses & Precedence Engine**, **Live Equation Sequel Preview**, **Collapsible Scientific Tray**, **Ghost Mode Opacity**, and persistent **Calculation History**.
 
+<div align="center">
+  <br>
+  <video src="https://github.com/AgniCompute/floatcalc/raw/main/docs/demo.mp4" controls autoplay loop muted playsinline width="640" style="max-width: 100%; border-radius: 12px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);">
+    <p>Your browser does not support the video tag. Watch the demo here: <a href="docs/demo.mp4"><code>docs/demo.mp4</code></a></p>
+  </video>
+  <p><em>Demonstrating Always-On-Top window pinning (<code>Ctrl+P</code>), parentheses precedence, scientific drawer, and ghost mode opacity.</em></p>
+  <br>
+</div>
+
 ---
 
-## Demo Video
-
-A walkthrough demonstration is available at [`docs/demo.mp4`](docs/demo.mp4), showcasing always-on-top window pinning (`Ctrl+P`), the Shunting Yard math parser with order of operations and parentheses, the flyout scientific drawer (`Alt+S`), and ghost opacity mode.
-
----
+## Key Features
 
 - **Always-On-Top Window Locking (`Ctrl+P`)**: Float your calculator above spreadsheets, web browsers, and IDEs without losing focus.
 - **Scientific Drawer & Parentheses (`Alt+S`)**:
