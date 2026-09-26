@@ -3,10 +3,15 @@ const previousValue = document.querySelector("#previousValue");
 const lockButton = document.querySelector("#lockButton");
 const settingsButton = document.querySelector("#settingsButton");
 const settingsPanel = document.querySelector("#settingsPanel");
+const historyButton = document.querySelector("#historyButton");
+const historyPanel = document.querySelector("#historyPanel");
+const historyList = document.querySelector("#historyList");
+const clearHistoryButton = document.querySelector("#clearHistoryButton");
 const themeButtons = document.querySelectorAll(".theme-option");
 const minimizeButton = document.querySelector("#minimizeButton");
 const closeButton = document.querySelector("#closeButton");
 const themeStorageKey = "floatcalc-theme";
+const historyStorageKey = "floatcalc-history";
 const desktopWindow = window.calculatorWindow ?? {
   minimize: () => Promise.resolve(),
   close: () => Promise.resolve(),
@@ -52,6 +57,18 @@ function updateDisplay() {
     state.operator && state.previous !== ""
       ? `${state.previous} ${displayOperator(state.operator)}`
       : "";
+
+  // Dynamic font scaling to guarantee large amounts never skew or overflow
+  const length = state.current.length;
+  if (length > 14) {
+    currentValue.style.fontSize = "26px";
+  } else if (length > 11) {
+    currentValue.style.fontSize = "32px";
+  } else if (length > 8) {
+    currentValue.style.fontSize = "40px";
+  } else {
+    currentValue.style.fontSize = "50px";
+  }
 }
 
 function displayOperator(operator) {
@@ -149,12 +166,80 @@ function calculate() {
   const previous = parseDisplay(state.previous);
   const current = parseDisplay(state.current);
   const result = operators[state.operator](previous, current);
+  const equation = `${state.previous} ${displayOperator(state.operator)} ${state.current} =`;
+  const formattedResult = formatNumber(result);
 
-  state.current = formatNumber(result);
+  addHistoryEntry({ equation, result: formattedResult });
+
+  state.current = formattedResult;
   state.previous = "";
   state.operator = null;
   state.shouldResetDisplay = true;
   updateDisplay();
+}
+
+function loadHistory() {
+  try {
+    const raw = localStorage.getItem(historyStorageKey);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHistory(list) {
+  try {
+    localStorage.setItem(historyStorageKey, JSON.stringify(list));
+  } catch {
+    // Local storage unavailable
+  }
+}
+
+function renderHistoryUI() {
+  const list = loadHistory();
+  if (!historyList) return;
+
+  if (list.length === 0) {
+    historyList.innerHTML = '<div class="history-empty">No calculations yet</div>';
+    return;
+  }
+
+  historyList.innerHTML = "";
+  list.forEach((item) => {
+    const entry = document.createElement("div");
+    entry.className = "history-item";
+    entry.innerHTML = `<span class="hist-eq">${item.equation}</span><span class="hist-res">${item.result}</span>`;
+    entry.addEventListener("click", () => {
+      state.current = item.result;
+      state.shouldResetDisplay = true;
+      updateDisplay();
+      setHistoryOpen(false);
+    });
+    historyList.appendChild(entry);
+  });
+}
+
+function addHistoryEntry(item) {
+  const list = loadHistory();
+  list.unshift(item);
+  if (list.length > 30) list.pop();
+  saveHistory(list);
+  renderHistoryUI();
+}
+
+function clearHistory() {
+  saveHistory([]);
+  renderHistoryUI();
+}
+
+function setHistoryOpen(isOpen) {
+  if (!historyPanel) return;
+  historyPanel.hidden = !isOpen;
+  if (historyButton) historyButton.setAttribute("aria-expanded", String(isOpen));
+  if (isOpen) {
+    renderHistoryUI();
+    setSettingsOpen(false);
+  }
 }
 
 function runAction(action) {
@@ -249,6 +334,8 @@ window.addEventListener("keydown", (event) => {
   } else if (event.key === "Escape") {
     if (!settingsPanel.hidden) {
       setSettingsOpen(false);
+    } else if (!historyPanel.hidden) {
+      setHistoryOpen(false);
     } else {
       clearCalculator();
     }
@@ -264,7 +351,18 @@ lockButton.addEventListener("click", async () => {
 
 settingsButton.addEventListener("click", () => {
   setSettingsOpen(settingsPanel.hidden);
+  if (!settingsPanel.hidden) setHistoryOpen(false);
 });
+
+historyButton.addEventListener("click", () => {
+  setHistoryOpen(historyPanel.hidden);
+});
+
+if (clearHistoryButton) {
+  clearHistoryButton.addEventListener("click", () => {
+    clearHistory();
+  });
+}
 
 themeButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -278,14 +376,20 @@ themeButtons.forEach((button) => {
 
 document.addEventListener("click", (event) => {
   if (
-    settingsPanel.hidden ||
-    settingsPanel.contains(event.target) ||
-    settingsButton.contains(event.target)
+    !settingsPanel.hidden &&
+    !settingsPanel.contains(event.target) &&
+    !settingsButton.contains(event.target)
   ) {
-    return;
+    setSettingsOpen(false);
   }
 
-  setSettingsOpen(false);
+  if (
+    !historyPanel.hidden &&
+    !historyPanel.contains(event.target) &&
+    !historyButton.contains(event.target)
+  ) {
+    setHistoryOpen(false);
+  }
 });
 
 minimizeButton.addEventListener("click", () => {
