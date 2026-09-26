@@ -1,90 +1,51 @@
 # FloatCalc
 
-A modern, precision-engineered Windows desktop calculator featuring a frameless translucent UI, native **Always-On-Top** pinning, **Shunting Yard Parentheses & Precedence Engine**, **Live Equation Sequel Preview**, **Collapsible Scientific Tray**, **Ghost Mode Opacity**, and persistent **Calculation History**.
+A minimalist, frameless desktop calculator that stays pinned on screen so your calculations never get lost while browsing webpages, working in spreadsheets, or switching between apps.
 
 <div align="center">
-  <br>
-  <video src="https://github.com/AgniCompute/floatcalc/raw/main/docs/demo.mp4" controls autoplay loop muted playsinline width="640" style="max-width: 100%; border-radius: 12px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);">
-    <p>Your browser does not support the video tag. Watch the demo here: <a href="docs/demo.mp4"><code>docs/demo.mp4</code></a></p>
-  </video>
-  <p><em>Demonstrating Always-On-Top window pinning (<code>Ctrl+P</code>), parentheses precedence, scientific drawer, and ghost mode opacity.</em></p>
-  <br>
+  <img src="docs/demo.gif" alt="FloatCalc Demo" width="720" style="max-width: 100%; border-radius: 10px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);">
+  <p><em>Always-on-top window pinning, compound parentheses math, scientific drawer, and ghost mode opacity.</em></p>
 </div>
 
 ---
 
-## Key Features
+## Why I Built It
 
-- **Always-On-Top Window Locking (`Ctrl+P`)**: Float your calculator above spreadsheets, web browsers, and IDEs without losing focus.
-- **Scientific Drawer & Parentheses (`Alt+S`)**:
-  - Full mathematical order of operations with balanced parentheses `(` and `)`.
-  - Trigonometric functions: $\sin, \cos, \tan$ with immediate `DEG` / `RAD` mode toggle.
-  - Powers and roots: $\sqrt{x}, x^2, x^y$ (power operator `^`).
-  - Logarithms & constants: $\ln, \log_{10}, 1/x, \pi$.
-- **Live Sequence Preview**: Active equations display in real time as you enter operands (e.g. `(2 + 3) * 4` before pressing enter) and resolve seamlessly to `(2 + 3) * 4 = 20`.
-- **Ghost Mode / Transparency**: Adjust window opacity down to 30% from the Settings menu to see underlying documents while calculating.
-- **One-Click Result Copy**: Click directly on the display number to copy the value to your clipboard with an animated confirmation badge.
-- **Persistent Calculation Tape (`Alt+H`)**: Session history saved locally with instant entry recall and clear controls.
-- **Frameless Acrylic Aesthetic**: Sleek glassmorphic card design with subtle 1px border highlight and smooth 12px rounded corners.
+Whenever I'm working across full-screen Excel sheets, research tabs, and workpapers, standard calculators get buried the second I click anywhere else. Constantly Alt-Tabbing or re-opening a calculator breaks focus, and basic calculators can't handle compound formulas with parentheses without losing your place.
+
+I built FloatCalc to solve that daily friction: a clean, floating tool that stays pinned right where you need it, lets you adjust transparency so you can see numbers underneath it, and shows live equation previews as you type.
 
 ---
 
-## Download & Installation
+## Features
 
-### Option 1: Standalone Portable App (Recommended for Users)
+- **Always-On-Top Pinning (`Ctrl+P`)**: Keep the calculator floating above spreadsheets, browsers, and text editors without losing focus.
+- **Ghost Mode Transparency**: Slide window opacity down to 30% to read numbers or tables directly through the calculator.
+- **Parentheses & Compound Math**: Handles multi-step formulas with parentheses `( )`, order of operations, powers, and roots.
+- **Live Equation Preview**: Shows the active formula in real time as you type before hitting equals.
+- **Flyout Scientific Drawer (`Alt+S`)**: Clean toggle for trigonometry, exponents, logarithms, and constants ($\pi, e$) without cluttering the main keypad.
+- **One-Click Copy**: Click the result to copy it straight to your clipboard with instant visual feedback.
+- **Session History (`Alt+H`)**: Keep track of recent calculations and recall them with one click.
+- **Frameless Acrylic Glass UI**: Modern, borderless dark-mode aesthetic designed to look native on Windows 11.
+
+---
+
+## Download & Run
+
+### Portable Standalone App (No Installation)
 1. Download **`FloatCalc-v1.0.0-Windows.zip`** from [GitHub Releases](https://github.com/AgniCompute/floatcalc/releases).
-2. Extract the archive to any folder on your PC.
-3. Double-click **`floatcalc.exe`** to launch immediately. No installer or administrator permissions needed!
+2. Extract the folder anywhere on your PC.
+3. Run **`FloatCalc.lnk`** (or `FloatCalc.cmd`) to launch immediately. No administrator rights or installer needed.
 
-### Option 2: Run From Source (Developers)
+### Run From Source (Developers)
 ```bash
-# 1. Clone the repository
+# Clone the repository
 git clone https://github.com/AgniCompute/floatcalc.git
 cd floatcalc
 
-# 2. Install dependencies
+# Install dependencies and launch
 npm install
-
-# 3. Launch developer instance
 npm start
-```
-
----
-
-## Verification & Automated Test Suite
-
-FloatCalc includes an automated developer verification suite testing math precision, parentheses precedence, edge cases, and state flow:
-
-```bash
-# Run unit and equation precedence tests
-npm test
-
-# Run JavaScript syntax validation
-npm run check
-```
-
----
-
-## Project Structure
-
-```text
-floatcalc/
-├── src/
-│   ├── index.html        # Semantic, accessible UI layout
-│   ├── styles.css        # Frameless Acrylic theme & design tokens
-│   ├── renderer.js       # Shunting-yard engine, scientific math & history
-│   ├── main.js           # Electron window lifecycle, opacity & pin IPC
-│   ├── preload.js        # Secure context-isolated bridge
-│   ├── icon-192.svg      # App icon asset (192px)
-│   └── icon-512.svg      # App icon asset (512px)
-├── scripts/
-│   ├── test-functional.js # Developer-grade automated verification suite
-│   └── check-syntax.js    # Syntax validation runner
-├── docs/
-│   └── design-direction.md # Architectural invariants & color hierarchy
-├── .gitignore            # Clean git exclusion rules
-├── package.json          # Dependencies & scripts
-└── README.md             # Project documentation
 ```
 
 ---
@@ -93,19 +54,18 @@ floatcalc/
 
 | Shortcut | Action |
 |---|---|
-| `0` - `9` | Input digits |
-| `+`, `-`, `*`, `/` | Arithmetic operators (`+`, `−`, `×`, `÷`) |
-| `^` | Power operator ($x^y$) |
+| `Ctrl + P` | Toggle Always-on-Top Pin |
+| `Alt + S` | Toggle Scientific Drawer |
+| `Alt + H` | Toggle Calculation History |
 | `(` and `)` | Parentheses grouping |
+| `^` | Power ($x^y$) |
 | `Enter` or `=` | Calculate result |
-| `Backspace` | Delete last digit |
-| `Escape` | Clear calculator / Close active overlay |
-| `Ctrl + P` | Toggle Always-on-Top (Pin mode) |
-| `Alt + S` | Toggle Scientific drawer |
-| `Alt + H` | Toggle Calculation History drawer |
+| `Escape` or `C` | Clear |
+| `Backspace` | Delete last character |
 
 ---
 
-## License
-
-MIT © [Radhe Patel](https://github.com/AgniCompute)
+## Built With
+- **Electron & Node.js**: Lightweight frameless desktop window management and IPC state.
+- **HTML5 & CSS Acrylic Glass**: Translucent, backdrop-filtered design system.
+- **Vanilla JavaScript**: Zero-dependency algebraic precedence evaluation and automated functional test suite.
