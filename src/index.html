@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FloatCalc</title>
-    <meta name="theme-color" content="#191d27" />
-    <link rel="manifest" href="./manifest.json" />
     <link rel="icon" type="image/svg+xml" href="./icon-192.svg" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -94,12 +92,5 @@
     </main>
 
     <script src="./renderer.js"></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js").catch(() => {});
-        });
-      }
-    </script>
   </body>
 </html>
