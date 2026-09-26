@@ -11,81 +11,125 @@
     <main class="shell">
       <header class="titlebar">
         <div class="drag-region" aria-label="Drag window">
-          <span class="mode-label" id="modeLabel">Standard</span>
+          <span class="app-brand">FloatCalc</span>
+          <span class="mode-badge" id="angleBadge">DEG</span>
         </div>
-        <button class="toolbar-button" id="historyButton" type="button" title="History" aria-label="History" aria-expanded="false">
-          <svg class="history-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-        </button>
-        <button class="toolbar-button" id="settingsButton" type="button" title="Settings" aria-label="Settings" aria-expanded="false">
-          <svg class="gear-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-          </svg>
-        </button>
-        <button class="toolbar-button lock-toggle" id="lockButton" type="button" title="Keep on top" aria-label="Keep on top" aria-pressed="false">
-          <svg class="pin-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="12" y1="17" x2="12" y2="22"></line>
-            <path d="M5 17h14v-2l-2-2V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v8l-2 2v2z"></path>
-            <line x1="9" y1="4" x2="15" y2="4"></line>
-          </svg>
-        </button>
-        <button class="window-button" id="minimizeButton" type="button" title="Minimize" aria-label="Minimize">−</button>
-        <button class="window-button close" id="closeButton" type="button" title="Close" aria-label="Close">×</button>
-      </header>
-
-      <aside class="history-panel" id="historyPanel" aria-label="Calculation History" hidden>
-        <div class="history-header">
-          <span>History</span>
-          <button type="button" id="clearHistoryButton" class="clear-history-button" title="Clear history">Clear</button>
-        </div>
-        <div class="history-list" id="historyList">
-          <div class="history-empty">No calculations yet</div>
-        </div>
-      </aside>
-
-      <aside class="settings-panel" id="settingsPanel" aria-label="Settings" hidden>
-        <div class="setting-group">
-          <span>Theme</span>
-          <div class="segmented" role="group" aria-label="Theme">
-            <button type="button" class="theme-option active" data-theme="light">Light</button>
-            <button type="button" class="theme-option" data-theme="dark">Dark</button>
+        <div class="controls-group">
+          <button class="toolbar-button" id="sciToggle" type="button" title="Scientific Functions (Alt+S)" aria-label="Toggle Scientific Mode" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19l4-14h4l4 14"></path>
+              <line x1="6" y1="13" x2="14" y2="13"></line>
+              <circle cx="19" cy="8" r="2"></circle>
+            </svg>
+          </button>
+          <button class="toolbar-button" id="historyButton" type="button" title="History (Alt+H)" aria-label="History" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </button>
+          <button class="toolbar-button" id="settingsButton" type="button" title="Settings" aria-label="Settings" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+          <button class="toolbar-button lock-toggle" id="lockButton" type="button" title="Always on Top (Ctrl+P)" aria-label="Always on Top" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="17" x2="12" y2="22"></line>
+              <path d="M5 17h14v-2l-2-2V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v8l-2 2v2z"></path>
+              <line x1="9" y1="4" x2="15" y2="4"></line>
+            </svg>
+          </button>
+          <div class="window-nav">
+            <button class="window-button" id="minimizeButton" type="button" title="Minimize" aria-label="Minimize">−</button>
+            <button class="window-button close" id="closeButton" type="button" title="Close" aria-label="Close">×</button>
           </div>
         </div>
+      </header>
+
+      <!-- History Dropdown Panel -->
+      <aside class="panel-dropdown history-panel" id="historyPanel" aria-label="Calculation History" hidden>
+        <div class="panel-header">
+          <span>Calculation Tape</span>
+          <button type="button" id="clearHistoryButton" class="text-action-button" title="Clear history">Clear</button>
+        </div>
+        <div class="history-list" id="historyList">
+          <div class="history-empty">No calculations recorded yet</div>
+        </div>
       </aside>
 
-      <section class="display" aria-live="polite">
+      <!-- Settings Dropdown Panel -->
+      <aside class="panel-dropdown settings-panel" id="settingsPanel" aria-label="Settings" hidden>
+        <div class="setting-row">
+          <label for="themeGroup">Theme</label>
+          <div class="segmented" id="themeGroup" role="group" aria-label="Theme selection">
+            <button type="button" class="theme-option active" data-theme="dark">Dark</button>
+            <button type="button" class="theme-option" data-theme="light">Light</button>
+          </div>
+        </div>
+        <div class="setting-row">
+          <label for="opacitySlider">Window Opacity (<span id="opacityLabel">100%</span>)</label>
+          <input type="range" id="opacitySlider" min="30" max="100" value="100" step="5" aria-label="Window opacity" />
+        </div>
+        <div class="setting-row">
+          <label for="angleToggleBtn">Angle Unit</label>
+          <button type="button" id="angleToggleBtn" class="pill-btn">Switch to RAD</button>
+        </div>
+      </aside>
+
+      <!-- Display Section with Dynamic Font Scaling & Active Expression Preview -->
+      <section class="display" id="displayArea" aria-live="polite" title="Click to copy result">
         <div class="display-values">
           <div class="previous" id="previousValue"></div>
           <output class="current" id="currentValue">0</output>
         </div>
+        <div class="copy-toast" id="copyToast" aria-hidden="true">Copied!</div>
       </section>
 
+      <!-- Scientific Drawer (Expandable / Collapsible) -->
+      <section class="scientific-tray" id="sciTray" aria-label="Scientific keys" hidden>
+        <div class="sci-grid">
+          <button data-sci="sin" class="sci-btn">sin</button>
+          <button data-sci="cos" class="sci-btn">cos</button>
+          <button data-sci="tan" class="sci-btn">tan</button>
+          <button data-sci="sqrt" class="sci-btn">√</button>
+          <button data-sci="square" class="sci-btn">x²</button>
+          <button data-paren="(" class="sci-btn parenthesis">(</button>
+          
+          <button data-sci="ln" class="sci-btn">ln</button>
+          <button data-sci="log" class="sci-btn">log</button>
+          <button data-sci="inv" class="sci-btn">1/x</button>
+          <button data-sci="pi" class="sci-btn">π</button>
+          <button data-sci="pow" class="sci-btn operator">xʸ</button>
+          <button data-paren=")" class="sci-btn parenthesis">)</button>
+        </div>
+      </section>
+
+      <!-- Main Numeric & Arithmetic Keypad -->
       <section class="keypad" aria-label="Calculator keys">
         <button data-action="clear" class="utility">AC</button>
         <button data-action="sign" class="utility">+/-</button>
         <button data-action="percent" class="utility">%</button>
-        <button data-operator="/" class="operator">/</button>
+        <button data-operator="/" class="operator">÷</button>
 
         <button data-number="7">7</button>
         <button data-number="8">8</button>
         <button data-number="9">9</button>
-        <button data-operator="*" class="operator">x</button>
+        <button data-operator="*" class="operator">×</button>
 
         <button data-number="4">4</button>
         <button data-number="5">5</button>
         <button data-number="6">6</button>
-        <button data-operator="-" class="operator">-</button>
+        <button data-operator="-" class="operator">−</button>
 
         <button data-number="1">1</button>
         <button data-number="2">2</button>
         <button data-number="3">3</button>
         <button data-operator="+" class="operator">+</button>
 
-        <button data-action="backspace" class="utility">DEL</button>
-        <button data-number="0" class="zero">0</button>
+        <button data-action="backspace" class="utility" title="Backspace (Del)">⌫</button>
+        <button data-number="0">0</button>
         <button data-action="decimal">.</button>
         <button data-action="equals" class="equals">=</button>
       </section>

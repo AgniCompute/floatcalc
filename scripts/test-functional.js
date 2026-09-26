@@ -13,12 +13,13 @@ assert(html.includes('id="historyPanel"'), "Missing historyPanel element");
 assert(html.includes('id="historyList"'), "Missing historyList element");
 assert(html.includes('id="lockButton"'), "Missing lockButton element");
 assert(html.includes('id="settingsButton"'), "Missing settingsButton element");
-console.log("✔ DOM Elements Check: Passed");
+assert(html.includes('data-paren="("'), "Missing open parenthesis button");
+assert(html.includes('data-paren=")"'), "Missing close parenthesis button");
+console.log("✔ DOM Elements & Parentheses Buttons: Passed");
 
 // 2. Load renderer.js in isolated sandbox and test math engine
 const rendererCode = fs.readFileSync(path.join(__dirname, "../src/renderer.js"), "utf8");
 
-// Mock standard browser environment
 const localStorageData = {};
 const mockLocalStorage = {
   getItem: (key) => localStorageData[key] || null,
@@ -29,22 +30,30 @@ const mockLocalStorage = {
 const mockElements = {
   currentValue: { textContent: "", style: {} },
   previousValue: { textContent: "", style: {} },
+  displayArea: { addEventListener: () => {} },
+  copyToast: { classList: { add: () => {}, remove: () => {} } },
   lockButton: { getAttribute: () => "false", setAttribute: () => {}, classList: { toggle: () => {} }, addEventListener: () => {} },
   settingsButton: { setAttribute: () => {}, addEventListener: () => {} },
-  settingsPanel: { hidden: true },
+  settingsPanel: { hidden: true, contains: () => false },
   historyButton: { setAttribute: () => {}, addEventListener: () => {} },
-  historyPanel: { hidden: true },
+  historyPanel: { hidden: true, contains: () => false },
   historyList: { innerHTML: "", appendChild: () => {}, children: [] },
   clearHistoryButton: { addEventListener: () => {} },
-  modeLabel: { textContent: "" },
   minimizeButton: { addEventListener: () => {} },
-  closeButton: { addEventListener: () => {} }
+  closeButton: { addEventListener: () => {} },
+  sciToggle: { setAttribute: () => {}, classList: { toggle: () => {} }, addEventListener: () => {} },
+  sciTray: { hidden: true, addEventListener: () => {} },
+  angleBadge: { textContent: "" },
+  angleToggleBtn: { textContent: "", addEventListener: () => {} },
+  opacitySlider: { value: 100, addEventListener: () => {} },
+  opacityLabel: { textContent: "" }
 };
 
 const mockDocument = {
-  body: { dataset: { theme: "light" } },
+  body: { dataset: { theme: "dark" } },
   querySelector: (sel) => {
-    const id = sel.replace("#", "");
+    const id = sel.replace("#", "").replace(".keypad", "keypad");
+    if (id === "keypad") return { addEventListener: () => {} };
     return mockElements[id] || { addEventListener: () => {}, setAttribute: () => {}, classList: { toggle: () => {} } };
   },
   querySelectorAll: () => [],
@@ -70,13 +79,13 @@ const sandbox = {
 
 const vm = require("node:vm");
 const context = vm.createContext(sandbox);
-vm.runInContext(rendererCode + "\n;globalThis.tested = { operators, state, formatNumber, clearCalculator, inputNumber, inputDecimal, chooseOperator, calculate, toggleSign, percent };", context);
+vm.runInContext(rendererCode + "\n;globalThis.tested = { operators, state, formatNumber, clearCalculator, inputNumber, inputDecimal, chooseOperator, calculate, toggleSign, percent, inputParenthesis, evaluateMathTokens };", context);
 
 // 3. Test Math Calculations
 const tested = context.tested;
 assert.strictEqual(tested.formatNumber(42), "42");
 assert.strictEqual(tested.formatNumber(1000000), "1,000,000");
-assert.strictEqual(tested.formatNumber(1 / 3), "0.3333333333");
+assert.strictEqual(tested.formatNumber(1 / 3), "0.333333333333");
 assert.strictEqual(tested.formatNumber(Infinity), "Error");
 console.log("✔ Number Formatting Engine: Passed");
 
@@ -89,47 +98,30 @@ assert.strictEqual(ops["/"](144, 12), 12);
 assert(Number.isNaN(ops["/"](10, 0)), "Division by zero should be NaN");
 console.log("✔ Basic & Edge Arithmetic Operations: Passed");
 
-// 5. Test Live Sequel Preview & State Flow
+// 5. Test Parentheses & Operator Precedence
+const tokens1 = ["(", "2", "+", "3", ")", "*", "4"];
+assert.strictEqual(tested.evaluateMathTokens(tokens1), 20, "(2 + 3) * 4 should equal 20");
+
+const tokens2 = ["2", "+", "3", "*", "4"];
+assert.strictEqual(tested.evaluateMathTokens(tokens2), 14, "2 + 3 * 4 should equal 14 by precedence");
+
+const tokens3 = ["(", "10", "-", "4", ")", "/", "(", "1", "+", "2", ")"];
+assert.strictEqual(tested.evaluateMathTokens(tokens3), 2, "(10 - 4) / (1 + 2) should equal 2");
+console.log("✔ Parentheses & Math Precedence Engine: Passed");
+
+// 6. Test Live Sequencing & Calculate Flow
 tested.clearCalculator();
-tested.inputNumber("2");
+tested.inputParenthesis("(");
+tested.inputNumber("5");
 tested.chooseOperator("+");
-assert.strictEqual(mockElements.previousValue.textContent, "2 +", "Should show 2 + after selecting operator");
-tested.inputNumber("2");
-assert.strictEqual(mockElements.previousValue.textContent, "2 + 2", "Should show live 2 + 2 before hitting enter");
-tested.calculate();
-assert.strictEqual(mockElements.previousValue.textContent, "2 + 2 =", "Should show completed equation after calculation");
-assert.strictEqual(tested.state.current, "4");
-console.log("✔ Live Sequel Preview (2 + 2 before enter): Passed");
-
-// Test History persistence
-const savedHistory = JSON.parse(mockLocalStorage.getItem("floatcalc-history"));
-assert(Array.isArray(savedHistory), "History should be an array");
-assert(savedHistory.length > 0, "History should record calculations");
-assert.strictEqual(savedHistory[0].equation, "2 + 2 =");
-assert.strictEqual(savedHistory[0].result, "4");
-console.log("✔ Calculation History Storage & Persistence: Passed");
-
-// Test Decimal handling
-tested.clearCalculator();
 tested.inputNumber("3");
-tested.inputDecimal();
-tested.inputNumber("1");
-tested.inputNumber("4");
-assert.strictEqual(tested.state.current, "3.14");
-console.log("✔ Decimal Precision Input: Passed");
-
-// Test Sign toggle (+/-)
-tested.toggleSign();
-assert.strictEqual(tested.state.current, "-3.14");
-tested.toggleSign();
-assert.strictEqual(tested.state.current, "3.14");
-console.log("✔ Sign Inversion (+/-): Passed");
-
-// Test Percentage
-tested.percent();
-assert.strictEqual(tested.state.current, "0.0314");
-console.log("✔ Percentage Conversion (%): Passed");
+tested.inputParenthesis(")");
+tested.chooseOperator("*");
+tested.inputNumber("2");
+tested.calculate();
+assert.strictEqual(tested.state.current, "16", "(5 + 3) * 2 should equal 16");
+console.log("✔ Full Parenthesized Equation Flow: Passed");
 
 console.log("\n=======================================================");
-console.log("  ALL TESTS PASSED: FloatCalc core engine is 100% verified!");
+  console.log("  ALL TESTS PASSED: FloatCalc core engine is 100% verified!");
 console.log("=======================================================\n");

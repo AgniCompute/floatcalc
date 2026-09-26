@@ -4,5 +4,6 @@ contextBridge.exposeInMainWorld("calculatorWindow", {
   minimize: () => ipcRenderer.invoke("window:minimize"),
   close: () => ipcRenderer.invoke("window:close"),
   toggleLock: () => ipcRenderer.invoke("window:toggle-lock"),
-  getLockState: () => ipcRenderer.invoke("window:get-lock-state")
+  getLockState: () => ipcRenderer.invoke("window:get-lock-state"),
+  setOpacity: (opacity) => ipcRenderer.invoke("window:set-opacity", opacity)
 });

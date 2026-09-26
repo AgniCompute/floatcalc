@@ -5,10 +5,10 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 350,
-    height: 580,
-    minWidth: 320,
-    minHeight: 480,
+    width: 340,
+    height: 540,
+    minWidth: 310,
+    minHeight: 460,
     frame: false,
     transparent: true,
     hasShadow: true,
@@ -43,6 +43,12 @@ app.whenReady().then(() => {
 
   ipcMain.handle("window:get-lock-state", () => {
     return mainWindow ? mainWindow.isAlwaysOnTop() : false;
+  });
+
+  ipcMain.handle("window:set-opacity", (_event, opacity) => {
+    if (!mainWindow) return;
+    const val = Math.max(0.25, Math.min(1.0, Number(opacity) || 1.0));
+    mainWindow.setOpacity(val);
   });
 
   createWindow();
