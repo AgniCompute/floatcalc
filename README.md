@@ -1,39 +1,76 @@
 # FloatCalc
 
-A clean, lightweight Windows desktop calculator with a **Pin** toggle to stay above your windows and a full **Calculation History** drawer.
-
-Built as an ultra-lean Progressive Web App (PWA) ready for local desktop use and Microsoft Store packaging. Zero bloated runtime dependencies.
+A clean, modern Windows desktop calculator featuring a seamless frameless design, native **Always-On-Top** window locking, **Live Equation Sequel Preview**, and persistent **Calculation History**.
 
 ---
 
-## Features
+## Highlights
 
-- **Always on top**: Pin the calculator so it never disappears behind your browser or spreadsheet.
-- **Calculation History**: Automatic equation and result recording with click-to-recall.
-- **Lightweight & Fast**: Pure standard web technologies; starts instantly with near-zero memory footprint.
-- **Offline Capable**: Backed by a service worker cache.
-- **Dual Themes**: Crisp light and high-contrast dark modes with instant toggle.
-- **Full Keyboard Support**: Numpad, `Enter` / `=`, `Escape`, backspace, and operator shortcuts.
-
----
-
-## Architecture
-
-- `src/index.html`: Clean, accessible interface.
-- `src/styles.css`: Modern responsive UI with theme variable tokens.
-- `src/renderer.js`: Precision mathematical calculation, keyboard handling, and persistent history.
-- `src/sw.js`: Service worker for reliable offline execution.
-- `src/manifest.json`: Web app manifest configured for standalone desktop presentation.
+- 📌 **Always-On-Top Pinning**: Lock the calculator window on top so it never gets buried behind spreadsheets, browsers, or code editors.
+- ⚡ **Live Equation Sequel Preview**: View active equations updating live in real time as you type operands (e.g. `2 + 2` shows before hitting enter) and completes into `2 + 2 =` with the result.
+- ⏱ **Calculation History Drawer**: Complete session history stored locally with one-click recall and history clearing.
+- 🎨 **Seamless Frameless UI**: Sleek, borderless layout with subtle 1px border, smooth 12px corners, and instant Light/Dark theme switching.
+- ⌨ **Full Keyboard Navigation**: Full numpad support, `Enter` / `=`, `Escape`, backspace, and operator keys.
+- 🧪 **Developer-Grade Test Suite**: Automated unit and DOM test suite verifying math precision, edge cases, and state flow.
 
 ---
 
-## Local Development & Testing
+## How to Run & Download
 
-Open `src/index.html` in Microsoft Edge, Chrome, or your default browser.
+### Option 1: Standalone Desktop Download (No Setup Needed)
+If you want to use FloatCalc directly without programming tools:
+1. Download the latest **`FloatCalc-Windows.zip`** from the [GitHub Releases](https://github.com/AgniCompute/floatcalc/releases) section.
+2. Extract the folder to any location on your PC.
+3. Double-click **`floatcalc.exe`** to run. No installation or administrator permissions required!
 
-To verify JavaScript syntax:
+### Option 2: Run from Source (Developers)
+If you have Node.js installed:
+
 ```bash
-node scripts/check-syntax.js
+# 1. Clone the repository
+git clone https://github.com/AgniCompute/floatcalc.git
+cd floatcalc
+
+# 2. Install dependencies
+npm install
+
+# 3. Launch the desktop app
+npm start
+```
+
+---
+
+## Automated Verification & Tests
+
+FloatCalc includes an automated functional test suite that verifies DOM readiness, math operations, live sequence previews, and history persistence:
+
+```bash
+# Run the test suite
+npm test
+
+# Run syntax integrity checks
+npm run check
+```
+
+---
+
+## Project Structure
+
+```
+calculator-lock/
+├── src/
+│   ├── index.html        # Clean, accessible UI markup
+│   ├── styles.css        # Frameless styling and design tokens
+│   ├── renderer.js      # Calculation engine, live preview & history
+│   ├── main.js           # Electron desktop window lifecycle & IPC
+│   ├── preload.js        # Secure context isolation bridge
+│   ├── manifest.json     # Web application manifest
+│   └── sw.js             # Service worker cache
+├── scripts/
+│   ├── test-functional.js # Automated verification test suite
+│   └── check-syntax.js   # Syntax validation script
+├── docs/                 # Architecture and design guides
+└── package.json          # Project configuration & scripts
 ```
 
 ---
@@ -41,3 +78,4 @@ node scripts/check-syntax.js
 ## License
 
 MIT © [Radhe Patel](https://github.com/AgniCompute)
+

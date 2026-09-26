@@ -89,24 +89,24 @@ assert.strictEqual(ops["/"](144, 12), 12);
 assert(Number.isNaN(ops["/"](10, 0)), "Division by zero should be NaN");
 console.log("✔ Basic & Edge Arithmetic Operations: Passed");
 
-// 5. Test State & History Flow
+// 5. Test Live Sequel Preview & State Flow
 tested.clearCalculator();
-tested.inputNumber("1");
 tested.inputNumber("2");
 tested.chooseOperator("+");
-tested.inputNumber("3");
+assert.strictEqual(mockElements.previousValue.textContent, "2 +", "Should show 2 + after selecting operator");
+tested.inputNumber("2");
+assert.strictEqual(mockElements.previousValue.textContent, "2 + 2", "Should show live 2 + 2 before hitting enter");
 tested.calculate();
-
-assert.strictEqual(tested.state.current, "15");
-assert.strictEqual(tested.state.previous, "");
-console.log("✔ Full Equation Calculation (12 + 3 = 15): Passed");
+assert.strictEqual(mockElements.previousValue.textContent, "2 + 2 =", "Should show completed equation after calculation");
+assert.strictEqual(tested.state.current, "4");
+console.log("✔ Live Sequel Preview (2 + 2 before enter): Passed");
 
 // Test History persistence
 const savedHistory = JSON.parse(mockLocalStorage.getItem("floatcalc-history"));
 assert(Array.isArray(savedHistory), "History should be an array");
 assert(savedHistory.length > 0, "History should record calculations");
-assert.strictEqual(savedHistory[0].equation, "12 + 3 =");
-assert.strictEqual(savedHistory[0].result, "15");
+assert.strictEqual(savedHistory[0].equation, "2 + 2 =");
+assert.strictEqual(savedHistory[0].result, "4");
 console.log("✔ Calculation History Storage & Persistence: Passed");
 
 // Test Decimal handling

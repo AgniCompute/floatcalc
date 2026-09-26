@@ -26,7 +26,8 @@ const state = {
   current: "0",
   previous: "",
   operator: null,
-  shouldResetDisplay: false
+  shouldResetDisplay: false,
+  completedEquation: ""
 };
 
 const operators = {
@@ -53,10 +54,19 @@ function parseDisplay(value) {
 
 function updateDisplay() {
   currentValue.textContent = state.current;
-  previousValue.textContent =
-    state.operator && state.previous !== ""
-      ? `${state.previous} ${displayOperator(state.operator)}`
-      : "";
+
+  // Live sequel/equation preview: show active equation as user types before enter
+  if (state.completedEquation) {
+    previousValue.textContent = state.completedEquation;
+  } else if (state.operator && state.previous !== "") {
+    if (state.shouldResetDisplay) {
+      previousValue.textContent = `${state.previous} ${displayOperator(state.operator)}`;
+    } else {
+      previousValue.textContent = `${state.previous} ${displayOperator(state.operator)} ${state.current}`;
+    }
+  } else {
+    previousValue.textContent = "";
+  }
 
   // Dynamic font scaling to guarantee large amounts never skew or overflow
   const length = state.current.length;
@@ -76,6 +86,8 @@ function displayOperator(operator) {
 }
 
 function inputNumber(number) {
+  state.completedEquation = "";
+
   if (state.current === "Error" || state.shouldResetDisplay) {
     state.current = number;
     state.shouldResetDisplay = false;
@@ -93,6 +105,8 @@ function inputNumber(number) {
 }
 
 function inputDecimal() {
+  state.completedEquation = "";
+
   if (state.current === "Error" || state.shouldResetDisplay) {
     state.current = "0.";
     state.shouldResetDisplay = false;
@@ -108,6 +122,7 @@ function clearCalculator() {
   state.previous = "";
   state.operator = null;
   state.shouldResetDisplay = false;
+  state.completedEquation = "";
   updateDisplay();
 }
 
@@ -143,6 +158,8 @@ function percent() {
 }
 
 function chooseOperator(operator) {
+  state.completedEquation = "";
+
   if (state.current === "Error") {
     clearCalculator();
     return;
@@ -150,6 +167,7 @@ function chooseOperator(operator) {
 
   if (state.operator && !state.shouldResetDisplay) {
     calculate();
+    state.completedEquation = "";
   }
 
   state.previous = state.current;
@@ -172,6 +190,7 @@ function calculate() {
   addHistoryEntry({ equation, result: formattedResult });
 
   state.current = formattedResult;
+  state.completedEquation = equation;
   state.previous = "";
   state.operator = null;
   state.shouldResetDisplay = true;

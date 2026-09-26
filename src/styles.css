@@ -90,13 +90,13 @@ body {
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 body {
-  background: var(--page-bg), var(--bg);
-  display: grid;
-  place-items: center;
-  padding: 18px;
+  background: transparent;
+  display: block;
   user-select: none;
 }
 
@@ -109,17 +109,14 @@ button {
 .shell {
   position: relative;
   display: grid;
-  grid-template-rows: 48px minmax(150px, 1fr) auto;
-  width: min(100%, 390px);
-  height: min(100%, 650px);
-  min-height: 560px;
+  grid-template-rows: 44px minmax(130px, 1fr) auto;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 12px;
   background: var(--shell);
-  box-shadow:
-    0 28px 72px rgba(0, 0, 0, 0.32),
-    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: none;
 }
 
 .titlebar {

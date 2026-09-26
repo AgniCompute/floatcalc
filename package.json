@@ -2,6 +2,7 @@
   "name": "floatcalc",
   "version": "0.1.0",
   "description": "A lightweight Windows desktop calculator with always-on-top mode and calculation history.",
+  "main": "src/main.js",
   "author": "Radhe Patel",
   "license": "MIT",
   "repository": {
@@ -9,6 +10,8 @@
     "url": "https://github.com/AgniCompute/floatcalc.git"
   },
   "scripts": {
+    "start": "electron .",
+    "test": "node scripts/test-functional.js",
     "check": "node scripts/check-syntax.js"
   },
   "keywords": [
@@ -18,6 +21,9 @@
     "always-on-top",
     "windows",
     "history"
-  ]
+  ],
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  }
 }
-
