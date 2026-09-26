@@ -6,12 +6,12 @@ A clean, modern Windows desktop calculator featuring a seamless frameless design
 
 ## Highlights
 
-- 📌 **Always-On-Top Pinning**: Lock the calculator window on top so it never gets buried behind spreadsheets, browsers, or code editors.
-- ⚡ **Live Equation Sequel Preview**: View active equations updating live in real time as you type operands (e.g. `2 + 2` shows before hitting enter) and completes into `2 + 2 =` with the result.
-- ⏱ **Calculation History Drawer**: Complete session history stored locally with one-click recall and history clearing.
-- 🎨 **Seamless Frameless UI**: Sleek, borderless layout with subtle 1px border, smooth 12px corners, and instant Light/Dark theme switching.
-- ⌨ **Full Keyboard Navigation**: Full numpad support, `Enter` / `=`, `Escape`, backspace, and operator keys.
-- 🧪 **Developer-Grade Test Suite**: Automated unit and DOM test suite verifying math precision, edge cases, and state flow.
+- **Always-On-Top Pinning**: Lock the calculator window on top so it never gets buried behind spreadsheets, browsers, or code editors.
+- **Live Equation Sequel Preview**: View active equations updating live in real time as you type operands (e.g. `2 + 2` shows before hitting enter) and completes into `2 + 2 =` with the result.
+- **Calculation History Drawer**: Complete session history stored locally with one-click recall and history clearing.
+- **Seamless Frameless UI**: Sleek, borderless layout with subtle 1px border, smooth 12px corners, and instant Light/Dark theme switching.
+- **Full Keyboard Navigation**: Full numpad support, `Enter` / `=`, `Escape`, backspace, and operator keys.
+- **Developer-Grade Test Suite**: Automated unit and DOM test suite verifying math precision, edge cases, and state flow.
 
 ---
 
